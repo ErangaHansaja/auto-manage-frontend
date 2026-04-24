@@ -1,0 +1,31 @@
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo-icon" style="background: transparent; padding: 0;">
+      <svg xmlns="http://www.w3.org/2000/svg" height="40" viewBox="0 0 24 24" width="80" fill="#0066cc">
+        <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
+      </svg>
+    </div>
+    <div class="logo-text" style="text-align: center; margin-top: -5px;">
+        <div class="title" style="color: #0066cc; font-weight: 800; font-size: 1.1rem; letter-spacing: 0.05em; text-transform: uppercase;">AUTOMANAGE</div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <ul>
+      <li *ngFor="let item of menuItems">
+        <a [routerLink]="item.route" routerLinkActive="active" class="nav-item">
+            <span class="material-icons-outlined" routerLinkActive="active-icon">{{ item.icon }}</span> <!-- Placeholder for icons, using text for now or simple SVG in SCSS if needed, or Material Icons if available -->
+            <span class="nav-label">{{ item.label }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-footer">
+
+    <button class="logout-btn">
+        <span class="material-icons-outlined">logout</span>
+        <span>Logout</span>
+    </button>
+  </div>
+</div>
