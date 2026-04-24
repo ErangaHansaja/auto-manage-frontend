@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { GeminiService, GeminiMessage } from './gemini.service';
 
 interface ChatMessage {
   sender: 'user' | 'ai';
@@ -16,17 +17,21 @@ interface ChatMessage {
 })
 export class AiAgentComponent implements AfterViewChecked {
   @ViewChild('chatContainer') private chatContainer!: ElementRef;
-  
+
   userInput: string = '';
   chatHistory: ChatMessage[] = [];
+  geminiHistory: GeminiMessage[] = [];
   isChatActive: boolean = false;
+  isLoading: boolean = false;
 
   suggestions = [
-    "Find part by VIN",
-    "Torque specs",
-    "Wiring diagrams",
-    "Repair guides"
+    'Find part by VIN',
+    'Torque specs',
+    'Wiring diagrams',
+    'Repair guides'
   ];
+
+  constructor(private geminiService: GeminiService) {}
 
   ngAfterViewChecked() {
     this.scrollToBottom();
@@ -35,7 +40,7 @@ export class AiAgentComponent implements AfterViewChecked {
   scrollToBottom(): void {
     try {
       this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight;
-    } catch(err) { }
+    } catch (err) {}
   }
 
   selectSuggestion(suggestion: string) {
@@ -44,30 +49,37 @@ export class AiAgentComponent implements AfterViewChecked {
   }
 
   sendMessage() {
-    if (!this.userInput.trim()) return;
+    const text = this.userInput.trim();
+    if (!text || this.isLoading) return;
 
+    // Show user message immediately
     this.isChatActive = true;
-    this.chatHistory.push({ sender: 'user', text: this.userInput });
-    
-    const query = this.userInput;
+    this.chatHistory.push({ sender: 'user', text });
     this.userInput = '';
+    this.isLoading = true;
 
-    // Mock AI response for demo purposes
-    setTimeout(() => {
-      let response = "I can help with that. Please provide more details.";
-      if (query.toLowerCase().includes("torque specs")) {
-          response = "For a 2018 Toyota Camry, the wheel lug nut torque is...\n[and a structured, detailed list of values, maybe a small snippet of an annotated wheel diagram/table for visual aid].\n\nIs there anything else about this vehicle?";
-      } else if (query.toLowerCase().includes("brake pad")) {
-          response = "[Information about brake pad thickness]\nminimum replacement thickness is 1mm...";
-      } else if (query.toLowerCase().includes("vin")) {
-          response = "Please provide the 17-digit VIN number to proceed.";
-      } else if (query.toLowerCase().includes("wiring diagrams")) {
-          response = "Sure, I can pull up wiring diagrams. What system are you working on?";
-      } else if (query.toLowerCase().includes("repair guides")) {
-          response = "Which component's repair guide are you looking for?";
+    // Call Gemini API
+    this.geminiService.sendMessage(this.geminiHistory, text).subscribe({
+      next: (response) => {
+        // Add to display history
+        this.chatHistory.push({ sender: 'ai', text: response });
+
+        // Update Gemini conversation history for context
+        this.geminiHistory.push(
+          { role: 'user', parts: [{ text }] },
+          { role: 'model', parts: [{ text: response }] }
+        );
+
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Gemini API error:', err);
+        this.chatHistory.push({
+          sender: 'ai',
+          text: 'Sorry, I encountered an error connecting to the AI service. Please check your API key and try again.'
+        });
+        this.isLoading = false;
       }
-
-      this.chatHistory.push({ sender: 'ai', text: response });
-    }, 800);
+    });
   }
 }

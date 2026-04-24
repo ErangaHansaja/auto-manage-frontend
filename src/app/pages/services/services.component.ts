@@ -1,30 +1,47 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { ServiceDialogComponent } from './service-dialog.component';
+import { ServiceApiService, Service } from './service-api.service';
 
 @Component({
   selector: 'app-services',
   standalone: true,
-  imports: [CommonModule, ServiceDialogComponent],
+  imports: [CommonModule, FormsModule, ServiceDialogComponent],
   templateUrl: './services.component.html',
   styleUrl: './services.component.scss'
 })
-export class ServicesComponent {
+export class ServicesComponent implements OnInit {
   showDialog = false;
+  isLoading = false;
+  errorMessage = '';
+  services: Service[] = [];
 
-  services = [
-    { customerName: 'Taylor Jewel', licensePlate: 'KSD- 921', vehicleModel: 'Toyota Corolla', complaint: 'Engine overheating...' },
-    { customerName: 'Jeremy Fisher', licensePlate: 'CAD- 564', vehicleModel: 'Honda Civic', complaint: 'Air conditioning not...' },
-    { customerName: 'Isabel Conklin', licensePlate: 'DSA-978', vehicleModel: 'Suzuki Alto', complaint: 'Unusual vibration while..' },
-    { customerName: 'Damon Salvatore', licensePlate: 'KRS-746', vehicleModel: 'Nissan Sunny', complaint: 'Battery draining quickly...' },
-    { customerName: 'Taylor Swift', licensePlate: 'TSW-235', vehicleModel: 'Hyundai Elantra', complaint: 'Fuel consumption...' }
-  ];
+  constructor(private serviceApi: ServiceApiService) {}
 
-  openDialog() {
-    this.showDialog = true;
+  ngOnInit(): void {
+    this.loadServices();
   }
 
-  closeDialog() {
+  loadServices(): void {
+    this.isLoading = true;
+    this.serviceApi.getAll().subscribe({
+      next: (data) => {
+        this.services = data;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load services:', err);
+        this.errorMessage = 'Failed to load services.';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  openDialog() { this.showDialog = true; }
+
+  closeDialog(reload?: boolean) {
     this.showDialog = false;
+    if (reload) this.loadServices();
   }
 }

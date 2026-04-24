@@ -11,17 +11,15 @@ import { CustomerDialogComponent } from './customer-dialog.component';
 })
 export class CustomersComponent {
   showDialog = false;
+  isLoading = false;
+  errorMessage = '';
+
   customers = [
-    { name: 'John Doe', email: 'john.doe@example.com', mobile: '+1 234 567 8900', status: 'Active' },
-    { name: 'Jane Smith', email: 'jane.smith@example.com', mobile: '+1 987 654 3210', status: 'Active' },
-    { name: 'Michael Johnson', email: 'michael.j@example.com', mobile: '+1 555 123 4567', status: 'Inactive' }
+    { name: 'John Doe', email: 'john.doe@example.com', mobile: '+1 234 567 8900', is_active: true },
+    { name: 'Jane Smith', email: 'jane.smith@example.com', mobile: '+1 987 654 3210', is_active: true },
+    { name: 'Michael Johnson', email: 'michael.j@example.com', mobile: '+1 555 123 4567', is_active: false }
   ];
 
-  openDialog() {
-    this.showDialog = true;
-  }
-
-  closeDialog() {
-    this.showDialog = false;
-  }
+  openDialog() { this.showDialog = true; }
+  closeDialog() { this.showDialog = false; }
 }

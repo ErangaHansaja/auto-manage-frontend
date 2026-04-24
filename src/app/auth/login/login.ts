@@ -40,16 +40,11 @@ export class Login {
     this.isLoading = true;
     this.errorMessage = '';
 
-    const { email, password, rememberMe } = this.loginForm.value;
-
-    // TODO: Replace with actual auth service call
-    console.log('Login payload:', { email, password, rememberMe });
-
-    // Simulate API call — replace with real service
+    // Simulated login — not connected to backend
     setTimeout(() => {
       this.isLoading = false;
       this.router.navigate(['/admin-mechanic-panel']);
-    }, 1500);
+    }, 1000);
   }
 
   userType: 'admin' | 'mechanic' = 'admin';
