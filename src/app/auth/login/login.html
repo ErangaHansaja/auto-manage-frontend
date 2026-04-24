@@ -1,0 +1,92 @@
+<div class="login-page">
+  <div class="login-card">
+    <div class="brand-header">
+      <div class="logo-container">
+        <div class="logo-box">
+          <span>AutoServe Pro</span>
+        </div>
+      </div>
+      <h1>AutoServe Pro - Login</h1>
+      <p class="subtitle">Access your service management dashboard</p>
+    </div>
+
+    <div class="user-type-toggle">
+      <button 
+        type="button" 
+        [class.active]="userType === 'admin'" 
+        (click)="setUserType('admin')">
+        Admin
+      </button>
+      <button 
+        type="button" 
+        [class.active]="userType === 'mechanic'" 
+        (click)="setUserType('mechanic')">
+        Mechanic
+      </button>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <div class="input-wrapper" [class.error]="f['email'].touched && f['email'].invalid">
+          <span class="input-icon email-icon"></span>
+          <input 
+            type="email" 
+            id="email" 
+            formControlName="email" 
+            placeholder="e.g. admin@autoserve.com">
+        </div>
+        @if (f['email'].touched && f['email'].errors?.['required']) {
+          <div class="error-msg">Email is required</div>
+        }
+        @if (f['email'].touched && f['email'].errors?.['email']) {
+          <div class="error-msg">Please enter a valid email</div>
+        }
+      </div>
+
+      <div class="form-group">
+        <div class="label-row">
+          <label for="password">Password</label>
+          <a href="#" class="forgot-link">Forgot Password?</a>
+        </div>
+        <div class="input-wrapper" [class.error]="f['password'].touched && f['password'].invalid">
+          <span class="input-icon lock-icon"></span>
+          <input 
+            [type]="showPassword ? 'text' : 'password'" 
+            id="password" 
+            formControlName="password" 
+            placeholder="••••••••">
+          <button type="button" class="toggle-password" (click)="togglePassword()">
+            <span class="eye-icon" [class.visible]="showPassword"></span>
+          </button>
+        </div>
+        @if (f['password'].touched && f['password'].errors?.['required']) {
+          <div class="error-msg">Password is required</div>
+        }
+        @if (f['password'].touched && f['password'].errors?.['minlength']) {
+          <div class="error-msg">Password must be at least 6 characters</div>
+        }
+      </div>
+
+      <div class="form-options">
+        <label class="checkbox-container">
+          <input type="checkbox" formControlName="rememberMe">
+          <span class="checkmark"></span>
+          Remember this device
+        </label>
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="loginForm.invalid || isLoading">
+        @if (isLoading) {
+          <span>Signing In...</span>
+        } @else {
+          <span>Sign In</span>
+        }
+      </button>
+    </form>
+
+    <div class="footer">
+      <p>SYSTEM VERSION 1.0.4 • © 2024 AUTOSERVE PRO</p>
+    </div>
+  </div>
+</div>
