@@ -1,0 +1,44 @@
+<div class="page-container">
+    <div class="page-header">
+        <h2>OBD Code Search</h2>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="section-title">
+            <h3>OBD Code Search</h3>
+            <p>Enter vehicle details below to generate a new service profile.</p>
+        </div>
+
+        <div class="search-card">
+            <div class="search-controls">
+                <div class="search-input-group">
+                    <input type="text" placeholder="Enter OBD Code..">
+                    <span class="material-icons-outlined search-icon">search</span>
+                </div>
+                <button class="btn-filter">More filter</button>
+            </div>
+            <div class="recent-text">
+                Resent searches : P0001, P0017, P0026
+            </div>
+        </div>
+
+        <div class="table-card">
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-code">Code</th>
+                            <th class="col-desc">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let code of obdCodes">
+                            <td>{{code.id}}</td>
+                            <td>{{code.desc}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

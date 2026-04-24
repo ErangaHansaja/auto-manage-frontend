@@ -18,6 +18,14 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/customers/customers.component').then(m => m.CustomersComponent)
             },
             {
+                path: 'vehicles',
+                loadComponent: () => import('./pages/vehicles/vehicles.component').then(m => m.VehiclesComponent)
+            },
+            {
+                path: 'services',
+                loadComponent: () => import('./pages/services/services.component').then(m => m.ServicesComponent)
+            },
+            {
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full'
