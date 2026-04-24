@@ -85,20 +85,22 @@
     }
 }
 
-.btn-filter {
-    background-color: #f1f5f9;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    padding: 0.5rem 1.5rem;
-    color: #94a3b8;
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
     font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
-    font-weight: 500;
-
-    &:hover {
-        background-color: #e2e8f0;
-        color: #64748b;
+    text-align: center;
+    border: none;
+    
+    &.btn-primary {
+        background-color: #5c6bc0;
+        color: #ffffff;
+        &:hover {
+            background-color: #4f5b93;
+        }
     }
 }
 
@@ -116,7 +118,7 @@
 }
 
 .table-scroll {
-    max-height: 360px;
+    max-height: 385px;
     overflow-y: auto;
 
     /* Custom Scrollbar for table */
@@ -146,25 +148,22 @@ table {
     thead {
         position: sticky;
         top: 0;
-        background-color: #eef2f6;
+        background-color: #e6ecfa; /* Light blue matching image */
         z-index: 1;
 
         th {
             padding: 1rem;
             color: #334155;
-            font-weight: 600;
+            font-weight: 500;
             font-size: 0.95rem;
+            text-align: left;
 
-            &.col-code {
-                width: 30%;
-                text-align: center;
+            &:first-child {
                 border-top-left-radius: 8px;
                 border-bottom-left-radius: 8px;
             }
 
-            &.col-desc {
-                width: 70%;
-                text-align: left;
+            &:last-child {
                 border-top-right-radius: 8px;
                 border-bottom-right-radius: 8px;
             }
@@ -173,7 +172,7 @@ table {
 
     tbody {
         tr {
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid #000000; /* Darker border matching image */
 
             &:last-child {
                 border-bottom: none;
@@ -184,10 +183,31 @@ table {
                 color: #334155;
                 font-size: 0.95rem;
 
-                &:first-child {
-                    text-align: center;
+                &.action-cell {
+                    text-align: right;
                 }
             }
         }
+    }
+}
+
+.bold-text {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.btn-view-more {
+    background-color: #5c6bc0;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    &:hover {
+        background-color: #4f5b93;
     }
 }

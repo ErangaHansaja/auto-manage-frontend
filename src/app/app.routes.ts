@@ -1,3 +1,4 @@
+// Force recompile
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -24,6 +25,10 @@ export const routes: Routes = [
             {
                 path: 'services',
                 loadComponent: () => import('./pages/services/services.component').then(m => m.ServicesComponent)
+            },
+            {
+                path: 'ai-agent',
+                loadComponent: () => import('./pages/ai-agent/ai-agent.component').then(m => m.AiAgentComponent)
             },
             {
                 path: '',

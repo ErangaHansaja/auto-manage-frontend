@@ -15,6 +15,6 @@ export class SidebarComponent {
         { label: 'Customers', icon: 'groups', route: '/admin-mechanic-panel/customers' },
         { label: 'Vehicles', icon: 'directions_car', route: '/admin-mechanic-panel/vehicles' },
         { label: 'Services', icon: 'settings', route: '/admin-mechanic-panel/services' },
-        { label: 'Loyalty', icon: 'volunteer_activism', route: '/admin-mechanic-panel/loyalty' },
+        { label: 'AI Agent', icon: 'smart_toy', route: '/admin-mechanic-panel/ai-agent' },
     ];
 }
