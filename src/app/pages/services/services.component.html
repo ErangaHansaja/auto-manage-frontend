@@ -30,24 +30,26 @@
                     <thead>
                         <tr>
                             <th class="col-name">Customer Name</th>
-                            <th class="col-plate">License Plate Number</th>
+                            <th class="col-mechanic">Mechanic</th>
+                            <th class="col-plate">License Plate</th>
                             <th class="col-model">Vehicle Model</th>
-                            <th class="col-complaint">Complaint</th>
+                            <th class="col-request">Customer Request</th>
                             <th class="col-action"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let service of services">
                             <td class="bold-text">{{service.customer_name}}</td>
+                            <td>{{service.mechanic}}</td>
                             <td>{{service.license_plate}}</td>
                             <td>{{service.vehicle_model}}</td>
-                            <td>{{service.complaint}}</td>
+                            <td class="truncate-cell">{{service.customer_request}}</td>
                             <td class="action-cell">
                                 <button class="btn-view-more">View More</button>
                             </td>
                         </tr>
                         <tr *ngIf="services.length === 0">
-                            <td colspan="5" class="state-msg">No services found.</td>
+                            <td colspan="6" class="state-msg">No services found.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -56,4 +58,4 @@
     </div>
 </div>
 
-<app-service-dialog *ngIf="showDialog" (closeDialog)="closeDialog()"></app-service-dialog>
+<app-service-dialog *ngIf="showDialog" (closeDialog)="closeDialog($event)"></app-service-dialog>

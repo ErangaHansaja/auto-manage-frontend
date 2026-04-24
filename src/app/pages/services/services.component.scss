@@ -211,3 +211,17 @@ table {
         background-color: #4f5b93;
     }
 }
+
+.truncate-cell {
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.state-msg {
+    text-align: center;
+    padding: 2rem;
+    color: #64748b;
+    font-size: 0.95rem;
+}
