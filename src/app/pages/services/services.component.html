@@ -1,0 +1,51 @@
+<div class="page-container">
+    <div class="page-header">
+        <h2>Services</h2>
+    </div>
+
+    <div class="content-wrapper">
+        <div class="section-title">
+            <h3>Services List</h3>
+            <p>Manage your services below.</p>
+        </div>
+
+        <div class="search-card">
+            <div class="search-controls" style="justify-content: space-between; align-items: center;">
+                <div class="search-input-group">
+                    <input type="text" placeholder="Search service..">
+                    <span class="material-icons-outlined search-icon">search</span>
+                </div>
+                <button class="btn btn-primary" (click)="openDialog()">+ Add Service</button>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-name">Customer Name</th>
+                            <th class="col-plate">License Plate Number</th>
+                            <th class="col-model">Vehicle Model</th>
+                            <th class="col-complaint">Complaint</th>
+                            <th class="col-action"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let service of services">
+                            <td class="bold-text">{{service.customerName}}</td>
+                            <td>{{service.licensePlate}}</td>
+                            <td>{{service.vehicleModel}}</td>
+                            <td>{{service.complaint}}</td>
+                            <td class="action-cell">
+                                <button class="btn-view-more">View More</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-service-dialog *ngIf="showDialog" (closeDialog)="closeDialog()"></app-service-dialog>

@@ -1,3 +1,49 @@
+// Force recompile
 import { Routes } from '@angular/router';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+    {
+        path: 'login',
+        loadComponent: () => import('./auth/login/login').then(m => m.Login)
+    },
+    {
+        path: 'admin-mechanic-panel',
+        loadComponent: () => import('./pages/admin-mechanic-panel/admin-mechanic-panel.component').then(m => m.AdminMechanicPanelComponent),
+        children: [
+            {
+                path: 'dashboard',
+                loadComponent: () => import('./pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
+            },
+            {
+                path: 'customers',
+                loadComponent: () => import('./pages/customers/customers.component').then(m => m.CustomersComponent)
+            },
+            {
+                path: 'vehicles',
+                loadComponent: () => import('./pages/vehicles/vehicles.component').then(m => m.VehiclesComponent)
+            },
+            {
+                path: 'services',
+                loadComponent: () => import('./pages/services/services.component').then(m => m.ServicesComponent)
+            },
+            {
+                path: 'ai-agent',
+                loadComponent: () => import('./pages/ai-agent/ai-agent.component').then(m => m.AiAgentComponent)
+            },
+            {
+                path: '',
+                redirectTo: 'dashboard',
+                pathMatch: 'full'
+            }
+        ]
+    },
+    {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+    },
+    {
+        path: '**',
+        redirectTo: 'login'
+    }
+];
