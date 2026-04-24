@@ -10,31 +10,17 @@
       <p class="subtitle">Access your service management dashboard</p>
     </div>
 
-    <div class="user-type-toggle">
-      <button 
-        type="button" 
-        [class.active]="userType === 'admin'" 
-        (click)="setUserType('admin')">
-        Admin
-      </button>
-      <button 
-        type="button" 
-        [class.active]="userType === 'mechanic'" 
-        (click)="setUserType('mechanic')">
-        Mechanic
-      </button>
-    </div>
-
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
       <div class="form-group">
         <label for="email">Email Address</label>
         <div class="input-wrapper" [class.error]="f['email'].touched && f['email'].invalid">
           <span class="input-icon email-icon"></span>
-          <input 
-            type="email" 
-            id="email" 
-            formControlName="email" 
-            placeholder="e.g. admin@autoserve.com">
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="e.g. admin@autoserve.com"
+          />
         </div>
         @if (f['email'].touched && f['email'].errors?.['required']) {
           <div class="error-msg">Email is required</div>
@@ -51,11 +37,12 @@
         </div>
         <div class="input-wrapper" [class.error]="f['password'].touched && f['password'].invalid">
           <span class="input-icon lock-icon"></span>
-          <input 
-            [type]="showPassword ? 'text' : 'password'" 
-            id="password" 
-            formControlName="password" 
-            placeholder="••••••••">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            formControlName="password"
+            placeholder="••••••••"
+          />
           <button type="button" class="toggle-password" (click)="togglePassword()">
             <span class="eye-icon" [class.visible]="showPassword"></span>
           </button>
@@ -70,7 +57,7 @@
 
       <div class="form-options">
         <label class="checkbox-container">
-          <input type="checkbox" formControlName="rememberMe">
+          <input type="checkbox" formControlName="rememberMe" />
           <span class="checkmark"></span>
           Remember this device
         </label>

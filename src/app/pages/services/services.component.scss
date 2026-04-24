@@ -26,7 +26,7 @@
 
 .section-title {
     margin-bottom: 1.5rem;
-    
+
     h3 {
         margin: 0 0 0.5rem 0;
         font-size: 1.5rem;
@@ -44,7 +44,7 @@
 .search-card {
     background-color: #ffffff;
     border-radius: 8px;
-    padding: 1.5rem;
+    padding: 1rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     margin-bottom: 1.5rem;
 }
@@ -111,29 +111,29 @@
 .table-card {
     background-color: #ffffff;
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 1rem;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .table-scroll {
-    max-height: 400px;
+    max-height: 360px;
     overflow-y: auto;
-    
+
     /* Custom Scrollbar for table */
     &::-webkit-scrollbar {
         width: 8px;
     }
-    
+
     &::-webkit-scrollbar-track {
         background: #f1f5f9;
         border-radius: 4px;
     }
-    
+
     &::-webkit-scrollbar-thumb {
         background: #94a3b8;
         border-radius: 4px;
     }
-    
+
     &::-webkit-scrollbar-thumb:hover {
         background: #64748b;
     }
@@ -154,14 +154,14 @@ table {
             color: #334155;
             font-weight: 600;
             font-size: 0.95rem;
-            
+
             &.col-code {
                 width: 30%;
                 text-align: center;
                 border-top-left-radius: 8px;
                 border-bottom-left-radius: 8px;
             }
-            
+
             &.col-desc {
                 width: 70%;
                 text-align: left;
@@ -174,7 +174,7 @@ table {
     tbody {
         tr {
             border-bottom: 1px solid #e2e8f0;
-            
+
             &:last-child {
                 border-bottom: none;
             }

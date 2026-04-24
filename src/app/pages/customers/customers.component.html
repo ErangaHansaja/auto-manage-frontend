@@ -1,8 +1,49 @@
 <div class="page-container">
     <div class="page-header">
-        <h2>Create customer</h2>
+        <h2>Customers</h2>
     </div>
 
+    <div class="content-wrapper">
+        <div class="section-title">
+            <h3>Customer List</h3>
+            <p>Manage your customers and their profiles.</p>
+        </div>
+
+        <div class="search-card">
+            <div class="search-controls" style="justify-content: space-between;">
+                <div class="search-input-group">
+                    <input type="text" placeholder="Search customer..">
+                    <span class="material-icons-outlined search-icon">search</span>
+                </div>
+                <button class="btn btn-primary" (click)="openDialog()" style="flex: unset; width: auto;">+ Add Customer</button>
+            </div>
+        </div>
+
+        <div class="table-card">
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-name">Name</th>
+                            <th class="col-email">Email</th>
+                            <th class="col-mobile">Mobile Number</th>
+                            <th class="col-status">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let customer of customers">
+                            <td>{{customer.name}}</td>
+                            <td>{{customer.email}}</td>
+                            <td>{{customer.mobile}}</td>
+                            <td>{{customer.status}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Commented out original UI:
     <div class="content-wrapper">
         <div class="form-container">
             <div class="form-header">
@@ -63,4 +104,7 @@
             </form>
         </div>
     </div>
+    -->
 </div>
+
+<app-customer-dialog *ngIf="showDialog" (closeDialog)="closeDialog()"></app-customer-dialog>
