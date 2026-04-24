@@ -11,17 +11,15 @@ import { VehicleDialogComponent } from './vehicle-dialog.component';
 })
 export class VehiclesComponent {
   showDialog = false;
+  isLoading = false;
+  errorMessage = '';
+
   vehicles = [
-    { name: 'Toyota Camry', model: '2020', plate: 'XYZ-1234', status: 'Active' },
-    { name: 'Honda Civic', model: '2022', plate: 'ABC-5678', status: 'Active' },
-    { name: 'Ford Mustang', model: '2019', plate: 'LMN-9101', status: 'Inactive' }
+    { name: 'Toyota Camry', model: '2020', license_plate: 'XYZ-1234', is_active: true },
+    { name: 'Honda Civic', model: '2022', license_plate: 'ABC-5678', is_active: true },
+    { name: 'Ford Mustang', model: '2019', license_plate: 'LMN-9101', is_active: false }
   ];
 
-  openDialog() {
-    this.showDialog = true;
-  }
-
-  closeDialog() {
-    this.showDialog = false;
-  }
+  openDialog() { this.showDialog = true; }
+  closeDialog() { this.showDialog = false; }
 }

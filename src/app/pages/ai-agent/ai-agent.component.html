@@ -1,17 +1,19 @@
 <div class="chat-wrapper">
-  <div class="chat-header">
+  <!-- Header matching other pages -->
+  <div class="page-header">
     <div class="logo-area">
-      <span class="material-icons-outlined gear-logo" style="color: #5cabc0;">settings</span>
-      <span class="header-title">Auto Manage</span>
+      <span class="material-icons-outlined gear-logo">settings</span>
+      <h2>Auto Manage</h2>
     </div>
   </div>
 
+  <!-- Scrollable chat area -->
   <div class="chat-content" #chatContainer>
     <!-- Initial Chat State -->
     <div class="initial-state" *ngIf="!isChatActive">
       <h1 class="welcome-title">Welcome to Auto Manage.</h1>
       <h2 class="welcome-subtitle">How can I help you fix it today?</h2>
-      
+
       <div class="suggestions-grid">
         <button class="suggestion-chip" *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
           {{suggestion}}
@@ -21,22 +23,38 @@
 
     <!-- Active Chat State -->
     <div class="active-chat" *ngIf="isChatActive">
-      <div class="message-wrapper" *ngFor="let msg of chatHistory" [ngClass]="{'user-msg': msg.sender === 'user', 'ai-msg': msg.sender === 'ai'}">
+      <div class="message-wrapper" *ngFor="let msg of chatHistory"
+        [ngClass]="{'user-msg': msg.sender === 'user', 'ai-msg': msg.sender === 'ai'}">
         <div class="ai-avatar" *ngIf="msg.sender === 'ai'">
-          <span class="material-icons-outlined" style="color: #5cabc0;">settings</span>
+          <span class="material-icons-outlined">settings</span>
         </div>
         <div class="message-bubble" [ngClass]="msg.sender">
           {{msg.text}}
         </div>
       </div>
+
+      <!-- Typing / Loading indicator -->
+      <div class="message-wrapper ai-msg" *ngIf="isLoading">
+        <div class="ai-avatar">
+          <span class="material-icons-outlined">settings</span>
+        </div>
+        <div class="message-bubble ai typing-indicator">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div class="chat-input-area">
+  <!-- Sticky Input Bar -->
+  <div class="chat-input-bar">
     <div class="input-container">
-      <input type="text" [(ngModel)]="userInput" (keyup.enter)="sendMessage()" placeholder="Ask Auto Manage...">
-      <button class="btn-send" [ngClass]="{'active': isChatActive || userInput.length > 0}" (click)="sendMessage()">
-        <span class="material-icons-outlined">send</span> Send
+      <input type="text" [(ngModel)]="userInput" (keyup.enter)="sendMessage()"
+        placeholder="Ask Auto Manage..." [disabled]="isLoading">
+      <button class="btn-send" [ngClass]="{'active': !isLoading && (isChatActive || userInput.length > 0)}"
+        (click)="sendMessage()" [disabled]="isLoading">
+        <span class="material-icons-outlined" *ngIf="!isLoading">send</span>
+        <span class="material-icons-outlined spin" *ngIf="isLoading">autorenew</span>
+        {{ isLoading ? 'Thinking...' : 'Send' }}
       </button>
     </div>
   </div>
