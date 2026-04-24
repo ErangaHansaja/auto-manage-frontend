@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
     selector: 'app-sidebar',
@@ -17,4 +18,10 @@ export class SidebarComponent {
         { label: 'Services', icon: 'settings', route: '/admin-mechanic-panel/services' },
         { label: 'AI Agent', icon: 'smart_toy', route: '/admin-mechanic-panel/ai-agent' },
     ];
+
+    constructor(private authService: AuthService) {}
+
+    logout(): void {
+        this.authService.logout();
+    }
 }
