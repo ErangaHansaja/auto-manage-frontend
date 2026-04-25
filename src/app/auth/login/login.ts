@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../core/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,10 +19,11 @@ export class Login {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       rememberMe: [false]
     });
@@ -40,17 +42,30 @@ export class Login {
     this.isLoading = true;
     this.errorMessage = '';
 
-    // Simulated login — not connected to backend
-    setTimeout(() => {
-      this.isLoading = false;
-      this.router.navigate(['/admin-mechanic-panel']);
-    }, 1000);
-  }
+    const { username, password } = this.loginForm.value;
 
-  userType: 'admin' | 'mechanic' = 'admin';
-
-  setUserType(type: 'admin' | 'mechanic'): void {
-    this.userType = type;
+    this.authService.login({ username, password }).subscribe({
+      next: (res) => {
+        this.isLoading = false;
+        if (res.success) {
+          this.router.navigate(['/admin-mechanic-panel']);
+        } else {
+          this.errorMessage = res.message || 'Login failed. Please try again.';
+        }
+      },
+      error: (err) => {
+        this.isLoading = false;
+        // BE returns { non_field_errors: ["Invalid credentials"] } on 400
+        const body = err?.error;
+        if (body?.non_field_errors?.length) {
+          this.errorMessage = body.non_field_errors[0];
+        } else if (body?.detail) {
+          this.errorMessage = body.detail;
+        } else {
+          this.errorMessage = 'Login failed. Please check your credentials.';
+        }
+      }
+    });
   }
 
   get f() {

@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface LoginPayload {
-  email: string;
+  username: string;
   password: string;
 }
 
-export interface LoginResponse {
-  access: string;
-  refresh: string;
-  user?: {
-    id: number;
-    email: string;
-    name: string;
-    role: string;
+// BE response envelope
+export interface LoginApiResponse {
+  success: boolean;
+  message: string;
+  data: {
+    access: string;
+    refresh: string;
   };
 }
 
@@ -26,14 +25,14 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(payload: LoginPayload): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login/`, payload).pipe(
-      tap(res => {
-        localStorage.setItem('access_token', res.access);
-        localStorage.setItem('refresh_token', res.refresh);
-        if (res.user) {
-          localStorage.setItem('user', JSON.stringify(res.user));
+  login(payload: LoginPayload): Observable<LoginApiResponse> {
+    return this.http.post<LoginApiResponse>(`${this.baseUrl}/auth/login/`, payload).pipe(
+      map(res => {
+        if (res.success) {
+          localStorage.setItem('access_token', res.data.access);
+          localStorage.setItem('refresh_token', res.data.refresh);
         }
+        return res;
       })
     );
   }
@@ -51,10 +50,5 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     return !!this.getToken();
-  }
-
-  getCurrentUser() {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
   }
 }
